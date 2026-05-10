@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suites | THE GRAND PALACE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            dark: '#A6864A',
+                            light: 'rgba(197, 160, 89, 0.1)',
+                            accent: 'rgba(197, 160, 89, 0.2)',
+                        },
+                        bg: {
+                            deep: '#0C0D0E',
+                            card: '#16181A',
+                        },
+                        text: {
+                            main: '#F8F5F2',
+                            muted: '#9CA3AF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'subtle-zoom': 'subtle-zoom 20s infinite alternate',
+                    },
+                    keyframes: {
+                        'subtle-zoom': {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0C0D0E; color: #F8F5F2; overflow-x: hidden; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 12px; }
+        .bento-card { background-color: #16181A; border: 1px solid rgba(197, 160, 89, 0.2); border-radius: 24px; padding: 24px; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .bento-card:hover { border-color: rgba(197, 160, 89, 0.5); transform: translateY(-4px); }
+        .luxury-gradient { background: linear-gradient(135deg, #16181A 0%, #0C0D0E 100%); }
+        @media (max-width: 1024px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .bento-grid { grid-template-columns: 1fr; } }
+        nav.scrolled { background: rgba(12, 13, 14, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(197, 160, 89, 0.2); padding: 12px 0; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-500 py-6 bg-bg-deep/80 backdrop-blur-md border-bottom border-gold/10">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 group">
+                <div class="p-2 rounded-xl bg-gold group-hover:rotate-12 transition-transform shadow-lg">
+                    <i data-lucide="hotel" class="text-bg-deep w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-serif font-black tracking-tighter text-text-main">
+                    GRAND <span class="text-gold">PALACE</span>
+                </span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="suites.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-gold">Suites</a>
+                <a href="dining.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Dining</a>
+                <a href="masterclass.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Masterclass</a>
+                <a href="reviews.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Reviews</a>
+                <a href="profile.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Profile</a>
+                <a href="contact.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Contact</a>
+                <button id="search-toggle" class="text-text-muted hover:text-gold transition-colors">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <a href="booking.html" class="px-8 py-3 bg-gold text-bg-deep text-[10px] uppercase tracking-[0.2em] font-black rounded-full hover:bg-white transition-all transform hover:scale-105">
+                    Reserved Stay
+                </a>
+            </div>
+            <button id="mobile-menu-toggle" class="lg:hidden text-text-main"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-bg-deep z-[60] flex flex-col items-center justify-center space-y-8 translate-x-full transition-transform duration-500">
+        <button id="mobile-menu-close" class="absolute top-8 right-8 text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="suites.html" class="text-3xl font-serif font-black text-gold">Luxury Suites</a>
+        <a href="dining.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Gourmet Dining</a>
+        <a href="masterclass.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Masterclasses</a>
+        <a href="contact.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Contact</a>
+        <button id="search-mobile-toggle" class="text-gold flex items-center space-x-3 text-2xl font-serif font-black">
+            <i data-lucide="search" class="w-8 h-8"></i>
+            <span>Search Portal</span>
+        </button>
+        <a href="booking.html" class="px-12 py-5 bg-gold text-bg-deep text-lg uppercase font-black rounded-full">Book Experience</a>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 bg-bg-deep/95 backdrop-blur-2xl z-[100] flex flex-col opacity-0 pointer-events-none transition-all duration-500">
+        <button id="search-close" class="absolute top-8 right-8 text-gold hover:rotate-90 transition-transform">
+            <i data-lucide="x" class="w-12 h-12"></i>
+        </button>
+        
+        <div class="container mx-auto px-6 mt-40 max-w-4xl">
+            <div class="relative group">
+                <input type="text" id="search-input" placeholder="What are you seeking? (Suites, Dining, Heritage...)" 
+                       class="w-full bg-transparent border-b-2 border-gold/20 py-8 text-4xl md:text-6xl font-serif font-black text-white outline-none focus:border-gold transition-all placeholder:text-text-muted/30">
+                <div class="absolute right-0 bottom-4 text-gold/30 group-focus-within:text-gold transition-colors">
+                    <i data-lucide="search" class="w-10 h-10"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20">
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Popular Sanctuaries</h4>
+                    <ul class="space-y-4">
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Presidential Coastal Wing</span>
+                        </a></li>
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Heritage Royal Studio</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Quick Navigation</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="dining.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Menu</a>
+                        <a href="masterclass.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Chef's Class</a>
+                        <a href="contact.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Concierge</a>
+                        <a href="profile.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Member Portal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="pt-40 pb-24 px-6 bg-bg-deep">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal active">
+                <div class="text-left">
+                    <span class="text-gold uppercase tracking-[0.4em] font-black text-[10px] mb-4 block">Exquisite Sanctuaries</span>
+                    <h2 class="text-5xl font-serif font-black text-text-main mb-4">Imperial Accommodations</h2>
+                    <div class="w-24 h-1 bg-gold"></div>
+                </div>
+                <p class="text-text-muted text-sm font-light max-w-sm mt-6 md:mt-0 italic lg:border-l lg:border-gold/20 lg:pl-8">
+                    "Every suite is a masterwork of design, crafted to satisfy the most refined architectural tastes."
+                </p>
+            </div>
+            <div class="bento-grid" id="suites-container"></div>
+        </div>
+    </section>
+
+    <footer class="bg-bg-deep pt-32 pb-12 px-6 border-t border-gold/10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+                <div class="col-span-1">
+                    <a href="index.html" class="flex items-center space-x-3 mb-10 group">
+                        <div class="p-3 rounded-2xl bg-gold group-hover:rotate-12 transition-transform shadow-xl">
+                            <i data-lucide="hotel" class="text-bg-deep w-8 h-8"></i>
+                        </div>
+                        <span class="text-3xl font-serif font-black tracking-tighter text-text-main">GRAND <span class="text-gold">PALACE</span></span>
+                    </a>
+                    <p class="text-text-muted text-sm font-light italic mb-10 max-w-xs">"We architect heritage memories for the world's most discerning travelers since 1924."</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-10 opacity-60">The Estate</h4>
+                    <ul class="space-y-6">
+                        <li><a href="suites.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Accommodations</a></li>
+                        <li><a href="dining.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Legacy Dining</a></li>
+                        <li><a href="masterclass.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Masterclass</a></li>
+                        <li><a href="booking.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Private Events</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-10 opacity-60">Elite Access</h4>
+                    <ul class="space-y-6">
+                        <li><a href="profile.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Member Portal</a></li>
+                        <li><a href="contact.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Concierge Desk</a></li>
+                        <li><a href="booking.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Booking Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="bento-card bg-bg-card border-l-4 border-l-gold p-8">
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-4">Legacy Newsletter</h4>
+                    <div class="flex flex-col space-y-4">
+                        <input type="email" placeholder="Member Email" class="bg-bg-deep border border-gold/10 rounded-xl px-4 py-4 text-xs outline-none focus:border-gold text-text-main">
+                        <button class="bg-gold text-bg-deep font-black text-[10px] uppercase tracking-widest py-4 rounded-xl hover:bg-white transition-all">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-gold/10 flex flex-col md:flex-row justify-between items-center text-[9px] uppercase tracking-[0.4em] font-black text-text-muted">
+                <p>© 2026 THE GRAND PALACE GROUP • DIGITAL PORTAL SECURED</p>
+                <div class="flex items-center space-x-8 text-text-muted/40"><span>Encryption Standards</span><div class="w-1 h-1 bg-gold rounded-full"></div><span>Heritage Rights</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const ROOMS = [
+            { id: 1, name: 'Presidential Wing', price: 1250, image: 'https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&fit=crop&q=80&w=600', tags: ['Ocean Front', 'Butler', 'Infinity Pool'] },
+            { id: 2, name: 'Royal Executive Studio', price: 850, image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=600', tags: ['City View', 'Spa Access', 'King Size'] },
+            { id: 3, name: 'Ocean Front Premium', price: 950, image: 'https://images.unsplash.com/photo-1591088398332-8a77d399c84e?auto=format&fit=crop&q=80&w=600', tags: ['Luxe Balcony', 'Smart Controls', 'Wine Cellar'] },
+            { id: 4, name: 'Heritage Heritage Suite', price: 2100, image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f28d?auto=format&fit=crop&q=80&w=600', tags: ['Historic Art', 'Gold Detailing', 'Private Chef'] },
+            { id: 5, name: 'Skyline Terrace', price: 720, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=600', tags: ['Top Floor', 'Garden Access', 'Library'] }
+        ];
+        function renderSuites() {
+            const container = document.getElementById('suites-container');
+            container.innerHTML = ROOMS.map((room, i) => `
+                <div class="bento-card group reveal active ${i % 3 === 0 ? 'col-span-2' : 'col-span-1'} p-0">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="${room.image}" class="w-full h-full object-cover grayscale-[0.4] group-hover:grayscale-0 transition-transform duration-700 group-hover:scale-110" alt="${room.name}">
+                        <div class="absolute top-4 right-4 bg-bg-deep/80 backdrop-blur-md border border-gold/20 px-4 py-2 rounded-xl">
+                            <span class="font-serif font-black text-xl text-gold">₹${(room.price * 83).toLocaleString()}</span>
+                            <span class="text-[10px] font-bold text-text-muted ml-1">/N</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-serif font-black text-text-main mb-4 group-hover:text-gold transition-colors">${room.name}</h3>
+                        <div class="space-y-3 mb-8 border-t border-gold/10 pt-4">
+                            ${room.tags.map(t => `<div class="flex justify-between items-center text-[10px] uppercase tracking-widest font-black text-text-muted border-b border-gold/5 pb-2"><span>${t}</span><span class="text-gold">✦</span></div>`).join('')}
+                        </div>
+                        <a href="booking.html" class="w-full flex items-center justify-center space-x-2 py-4 bg-gold/10 border border-gold/20 text-gold text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-gold hover:text-bg-deep transition-all shadow-xl group/btn">
+                            <span>Reserve Experience</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+        renderSuites();
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-toggle').onclick = () => mobileMenu.classList.remove('translate-x-full');
+        document.getElementById('mobile-menu-close').onclick = () => mobileMenu.classList.add('translate-x-full');
+
+        // Search Logic
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchToggle = document.getElementById('search-toggle');
+        const searchMobileToggle = document.getElementById('search-mobile-toggle');
+        const searchClose = document.getElementById('search-close');
+        const searchInput = document.getElementById('search-input');
+
+        const openSearch = () => {
+            searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => searchInput.focus(), 500);
+            mobileMenu.classList.add('translate-x-full');
+        };
+        const closeSearch = () => searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+
+        if (searchToggle) searchToggle.onclick = openSearch;
+        if (searchMobileToggle) searchMobileToggle.onclick = openSearch;
+        if (searchClose) searchClose.onclick = closeSearch;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSearch();
+        });
+    </script>
+</body>
+</html>

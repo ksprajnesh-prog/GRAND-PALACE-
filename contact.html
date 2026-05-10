@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Concierge | THE GRAND PALACE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            dark: '#A6864A',
+                            light: 'rgba(197, 160, 89, 0.1)',
+                            accent: 'rgba(197, 160, 89, 0.2)',
+                        },
+                        bg: {
+                            deep: '#0C0D0E',
+                            card: '#16181A',
+                        },
+                        text: {
+                            main: '#F8F5F2',
+                            muted: '#9CA3AF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0C0D0E; color: #F8F5F2; overflow-x: hidden; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 12px; }
+        .bento-card { background-color: #16181A; border: 1px solid rgba(197, 160, 89, 0.2); border-radius: 24px; padding: 32px; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .bento-card:hover { border-color: rgba(197, 160, 89, 0.5); transform: translateY(-4px); }
+        .luxury-gradient { background: linear-gradient(135deg, #16181A 0%, #0C0D0E 100%); }
+        
+        @media (max-width: 1024px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .bento-grid { grid-template-columns: 1fr; } }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <!-- Navigation -->
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-500 py-6 bg-bg-deep/80 backdrop-blur-md border-b border-gold/10">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 group">
+                <div class="p-2 rounded-xl bg-gold group-hover:rotate-12 transition-transform shadow-lg">
+                    <i data-lucide="hotel" class="text-bg-deep w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-serif font-black tracking-tighter text-text-main">
+                    GRAND <span class="text-gold">PALACE</span>
+                </span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="suites.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Suites</a>
+                <a href="dining.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Dining</a>
+                <a href="masterclass.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Masterclass</a>
+                <a href="contact.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-gold">Contact</a>
+                <button id="search-toggle" class="text-text-muted hover:text-gold transition-colors">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <a href="booking.html" class="px-8 py-3 bg-gold text-bg-deep text-[10px] uppercase tracking-[0.2em] font-black rounded-full hover:bg-white transition-all transform hover:scale-105">
+                    Reserved Stay
+                </a>
+            </div>
+            <button id="mobile-menu-toggle" class="lg:hidden text-text-main"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-bg-deep z-[60] flex flex-col items-center justify-center space-y-8 translate-x-full transition-transform duration-500">
+        <button id="mobile-menu-close" class="absolute top-8 right-8 text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="suites.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Luxury Suites</a>
+        <a href="dining.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Gourmet Dining</a>
+        <a href="contact.html" class="text-3xl font-serif font-black text-gold">Contact Concierge</a>
+        <button id="search-mobile-toggle" class="text-gold flex items-center space-x-3 text-2xl font-serif font-black">
+            <i data-lucide="search" class="w-8 h-8"></i>
+            <span>Search Portal</span>
+        </button>
+        <a href="booking.html" class="px-12 py-5 bg-gold text-bg-deep text-lg uppercase font-black rounded-full">Book Experience</a>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 bg-bg-deep/95 backdrop-blur-2xl z-[100] flex flex-col opacity-0 pointer-events-none transition-all duration-500">
+        <button id="search-close" class="absolute top-8 right-8 text-gold hover:rotate-90 transition-transform">
+            <i data-lucide="x" class="w-12 h-12"></i>
+        </button>
+        
+        <div class="container mx-auto px-6 mt-40 max-w-4xl">
+            <div class="relative group">
+                <input type="text" id="search-input" placeholder="What are you seeking? (Suites, Dining, Heritage...)" 
+                       class="w-full bg-transparent border-b-2 border-gold/20 py-8 text-4xl md:text-6xl font-serif font-black text-white outline-none focus:border-gold transition-all placeholder:text-text-muted/30">
+                <div class="absolute right-0 bottom-4 text-gold/30 group-focus-within:text-gold transition-colors">
+                    <i data-lucide="search" class="w-10 h-10"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20">
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Popular Sanctuaries</h4>
+                    <ul class="space-y-4">
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Presidential Coastal Wing</span>
+                        </a></li>
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Heritage Royal Studio</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Quick Navigation</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="dining.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Menu</a>
+                        <a href="masterclass.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Chef's Class</a>
+                        <a href="contact.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Concierge</a>
+                        <a href="profile.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Member Portal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-40 pb-24 px-6 container mx-auto">
+        <div class="text-center mb-16 reveal active">
+            <span class="text-gold uppercase tracking-[0.4em] font-black text-[10px] mb-4 block">Personalized Assistance</span>
+            <h1 class="text-6xl font-serif font-black text-text-main mb-6 leading-tight">Concierge <span class="text-gold">Desk</span></h1>
+            <p class="text-text-muted text-sm font-light max-w-xl mx-auto italic">"Our heritage managers are available around the clock to ensure your stay exceeds the bounds of conventional luxury."</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- Contact Form -->
+            <div class="bento-card col-span-2 row-span-2 luxury-gradient border-l-4 border-l-gold">
+                <h3 class="text-2xl font-serif font-black text-text-main mb-8">Inquiry <span class="text-gold">Portal</span></h3>
+                <form onsubmit="event.preventDefault(); alert('Management notified. Expect contact momentarily.');" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[9px] uppercase font-black text-text-muted tracking-[0.3em] ml-1">Full Identity</label>
+                            <input type="text" placeholder="Your Name" class="w-full p-4 bg-bg-deep border border-gold/10 rounded-xl outline-none focus:border-gold transition-all text-xs" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[9px] uppercase font-black text-text-muted tracking-[0.3em] ml-1">Preferred Protocol</label>
+                            <input type="email" placeholder="Email Address" class="w-full p-4 bg-bg-deep border border-gold/10 rounded-xl outline-none focus:border-gold transition-all text-xs" required>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] uppercase font-black text-text-muted tracking-[0.3em] ml-1">Inquiry Nature</label>
+                        <select class="w-full p-4 bg-bg-deep border border-gold/10 rounded-xl outline-none focus:border-gold transition-all text-xs appearance-none">
+                            <option>Private Suite Inquiries</option>
+                            <option>Gourmet Table Reservation</option>
+                            <option>Masterclass Booking</option>
+                            <option>General Concierge Request</option>
+                            <option>Media & Partnerships</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] uppercase font-black text-text-muted tracking-[0.3em] ml-1">Message Brief</label>
+                        <textarea placeholder="Describe your requirement..." rows="5" class="w-full p-4 bg-bg-deep border border-gold/10 rounded-xl outline-none focus:border-gold transition-all text-xs resize-none" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-5 bg-gold text-bg-deep font-black uppercase tracking-[0.2em] text-[10px] rounded-xl hover:bg-white transition-all shadow-xl">
+                        Submit for Review
+                    </button>
+                </form>
+            </div>
+
+            <!-- Fast Response -->
+            <div class="bento-card col-span-2 bg-bg-card border-none flex flex-col justify-between group">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="text-gold uppercase tracking-[0.4em] font-black text-[9px] mb-2 block">Direct Access</span>
+                        <h3 class="text-3xl font-serif font-black text-text-main">Legacy <br />Hotlines</h3>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20">
+                        <i data-lucide="phone-call" class="w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-8 mt-8 pb-4">
+                    <div>
+                        <h4 class="text-[9px] uppercase tracking-widest font-black text-text-muted mb-2">Concierge</h4>
+                        <p class="text-sm font-serif font-black text-text-main">+91 000 882 1924</p>
+                    </div>
+                    <div>
+                        <h4 class="text-[9px] uppercase tracking-widest font-black text-text-muted mb-2">Kitchen</h4>
+                        <p class="text-sm font-serif font-black text-text-main">+91 000 771 1924</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="bento-card col-span-1 bg-bg-deep border-gold/10 flex flex-col items-center justify-center text-center p-8">
+                <i data-lucide="map-pin" class="text-gold w-10 h-10 mb-6"></i>
+                <h4 class="text-[10px] uppercase font-black tracking-widest text-text-muted mb-2">Prime Axis</h4>
+                <p class="text-xs text-text-main font-bold leading-relaxed">Royal Blvd, Palace District <br />Palace Heights, 40001</p>
+            </div>
+
+            <!-- Email -->
+            <div class="bento-card col-span-1 bg-bg-deep border-gold/10 flex flex-col items-center justify-center text-center p-8">
+                <i data-lucide="mail" class="text-gold w-10 h-10 mb-6"></i>
+                <h4 class="text-[10px] uppercase font-black tracking-widest text-text-muted mb-2">Digital Correspond</h4>
+                <p class="text-xs text-text-main font-bold">concierge@grandpalace.in</p>
+            </div>
+        </div>
+
+        <!-- Global Presence -->
+        <div class="mt-12 bento-card luxury-gradient border-none">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
+                <div>
+                    <h3 class="text-2xl font-serif font-black text-text-main mb-2">Digital Concierge App</h3>
+                    <p class="text-text-muted text-xs font-light">Available for Heritage & Elite members on iOS and Android.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button class="px-8 py-3 bg-white/5 border border-white/10 rounded-xl flex items-center space-x-3 hover:bg-white/10 transition-all">
+                        <i data-lucide="smartphone" class="w-5 h-5 text-gold"></i>
+                        <span class="text-[9px] uppercase font-black tracking-widest">Connect ID</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bg-deep pt-32 pb-12 px-6 border-t border-gold/10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+                <div class="col-span-1">
+                    <a href="index.html" class="flex items-center space-x-3 mb-10 group">
+                        <div class="p-3 rounded-2xl bg-gold group-hover:rotate-12 transition-transform shadow-xl">
+                            <i data-lucide="hotel" class="text-bg-deep w-8 h-8"></i>
+                        </div>
+                        <span class="text-3xl font-serif font-black tracking-tighter text-text-main">GRAND <span class="text-gold">PALACE</span></span>
+                    </a>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-10 opacity-60">Elite Access</h4>
+                    <ul class="space-y-6">
+                        <li><a href="profile.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block">Member Portal</a></li>
+                        <li><a href="contact.html" class="text-text-muted text-xs font-bold uppercase tracking-widest hover:text-gold transition-colors block underline underline-offset-4 decoration-gold">Concierge Desk</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center pt-12 border-t border-gold/10 text-[9px] uppercase tracking-[0.4em] font-black text-text-muted">
+                <p>© 2026 THE GRAND PALACE GROUP • DIGITAL PORTAL SECURED</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-toggle').onclick = () => mobileMenu.classList.remove('translate-x-full');
+        document.getElementById('mobile-menu-close').onclick = () => mobileMenu.classList.add('translate-x-full');
+
+        // Search Logic
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchToggle = document.getElementById('search-toggle');
+        const searchMobileToggle = document.getElementById('search-mobile-toggle');
+        const searchClose = document.getElementById('search-close');
+        const searchInput = document.getElementById('search-input');
+
+        const openSearch = () => {
+            searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => searchInput.focus(), 500);
+            mobileMenu.classList.add('translate-x-full');
+        };
+        const closeSearch = () => searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+
+        if (searchToggle) searchToggle.onclick = openSearch;
+        if (searchMobileToggle) searchMobileToggle.onclick = openSearch;
+        if (searchClose) searchClose.onclick = closeSearch;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSearch();
+        });
+        
+        window.onscroll = () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        };
+    </script>
+</body>
+</html>

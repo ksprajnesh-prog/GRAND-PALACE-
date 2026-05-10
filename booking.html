@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserved Stay | THE GRAND PALACE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            dark: '#A6864A',
+                            light: 'rgba(197, 160, 89, 0.1)',
+                            accent: 'rgba(197, 160, 89, 0.2)',
+                        },
+                        bg: {
+                            deep: '#0C0D0E',
+                            card: '#16181A',
+                        },
+                        text: {
+                            main: '#F8F5F2',
+                            muted: '#9CA3AF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0C0D0E; color: #F8F5F2; overflow-x: hidden; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 12px; }
+        .bento-card { background-color: #16181A; border: 1px solid rgba(197, 160, 89, 0.2); border-radius: 24px; padding: 24px; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .bento-card:hover { border-color: rgba(197, 160, 89, 0.5); transform: translateY(-4px); }
+        .luxury-gradient { background: linear-gradient(135deg, #16181A 0%, #0C0D0E 100%); }
+        @media (max-width: 1024px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .bento-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-500 py-6 bg-bg-deep/80 backdrop-blur-md border-bottom border-gold/10">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 group">
+                <div class="p-2 rounded-xl bg-gold group-hover:rotate-12 transition-transform shadow-lg">
+                    <i data-lucide="hotel" class="text-bg-deep w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-serif font-black tracking-tighter text-text-main">
+                    GRAND <span class="text-gold">PALACE</span>
+                </span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="suites.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Suites</a>
+                <a href="dining.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Dining</a>
+                <a href="masterclass.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Masterclass</a>
+                <a href="reviews.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Reviews</a>
+                <a href="profile.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Profile</a>
+                <a href="contact.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Contact</a>
+                <a href="booking.html" class="px-8 py-3 bg-gold text-bg-deep text-[10px] uppercase tracking-[0.2em] font-black rounded-full shadow-lg">
+                    Reserved Stay
+                </a>
+            </div>
+            <button id="mobile-menu-toggle" class="lg:hidden text-text-main"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-bg-deep z-[60] flex flex-col items-center justify-center space-y-8 translate-x-full transition-transform duration-500">
+        <button id="mobile-menu-close" class="absolute top-8 right-8 text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="suites.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Luxury Suites</a>
+        <a href="dining.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Gourmet Dining</a>
+        <a href="masterclass.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Masterclasses</a>
+        <a href="booking.html" class="text-3xl font-serif font-black text-gold">Book Experience</a>
+    </div>
+
+    <section class="pt-40 pb-24 px-6 bg-bg-deep">
+        <div class="container mx-auto">
+            <div class="bento-grid">
+                <div class="bento-card col-span-2 lg:p-20 luxury-gradient border-l-4 border-l-gold">
+                    <div class="max-w-xl">
+                        <span class="text-gold uppercase tracking-[0.4em] font-black text-[10px] mb-4 block">Quick Reserve</span>
+                        <h2 class="text-5xl font-serif font-black text-text-main mb-8">Secure Your <br /><span class="text-gold">Heritage Stay</span></h2>
+                        <form onsubmit="event.preventDefault(); alert('Concierge Notified.');" class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase font-black text-text-muted tracking-widest ml-1">Full Identity</label>
+                                <input type="text" placeholder="Your Name" class="w-full p-5 bg-bg-deep border border-gold/20 rounded-2xl outline-none focus:border-gold transition-all text-sm">
+                            </div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] uppercase font-black text-text-muted tracking-widest ml-1">Member Email</label>
+                                    <input type="email" placeholder="email@luxury.com" class="w-full p-5 bg-bg-deep border border-gold/20 rounded-2xl outline-none focus:border-gold transition-all text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] uppercase font-black text-text-muted tracking-widest ml-1">Reservation Key</label>
+                                    <select class="w-full p-5 bg-bg-deep border border-gold/20 rounded-2xl outline-none focus:border-gold transition-all text-sm appearance-none">
+                                        <option>Presidential Wing</option>
+                                        <option>Executive Studio</option>
+                                        <option>Ocean Front Premium</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-6 bg-gold text-bg-deep font-black uppercase tracking-[0.2em] text-xs rounded-2xl hover:bg-white transition-all transform active:scale-95 shadow-2xl">
+                                Initialize Secure Booking
+                            </button>
+                            <p class="text-center text-[9px] text-text-muted uppercase tracking-widest font-black opacity-50">Private encrypted data handshake guaranteed</p>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="bento-card col-span-2 p-0 h-[600px] lg:h-auto relative">
+                    <div class="absolute inset-0 bg-[#1a1a1a] flex flex-col items-center justify-center p-12 text-center">
+                        <i data-lucide="map-pin" class="text-gold w-16 h-16 mb-8 animate-bounce"></i>
+                        <h3 class="text-4xl font-serif font-black text-text-main mb-4">Prime Coastal Axis</h3>
+                        <p class="text-text-muted text-sm font-light mb-10 max-w-sm">124 Royal Boulevard, Palace District. <br />Coordinates: 40.71, -74.00 SECURED</p>
+                        <div class="w-full h-1 bg-gold/20 rounded-full overflow-hidden mb-12">
+                            <div class="w-1/2 h-full bg-gold animate-pulse"></div>
+                        </div>
+                        <button class="px-10 py-4 border border-gold text-gold rounded-full text-[10px] uppercase font-black tracking-widest hover:bg-gold hover:text-bg-deep transition-all">Initialize Satellite View</button>
+                    </div>
+                    <div class="absolute bottom-10 right-10 bento-card border-none bg-bg-deep/80 backdrop-blur-xl p-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
+                            <span class="text-[10px] tracking-widest uppercase font-black">Live Satellite Lock</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        lucide.createIcons();
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-toggle').onclick = () => mobileMenu.classList.remove('translate-x-full');
+        document.getElementById('mobile-menu-close').onclick = () => mobileMenu.classList.add('translate-x-full');
+    </script>
+</body>
+</html>

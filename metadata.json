@@ -1,0 +1,8 @@
+{
+  "name": "Luxury Grand Palace Hotel",
+  "description": "A 5-star luxury experience with exquisite rooms, gourmet dining, and world-class amenities.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass | THE GRAND PALACE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            dark: '#A6864A',
+                            light: 'rgba(197, 160, 89, 0.1)',
+                            accent: 'rgba(197, 160, 89, 0.2)',
+                        },
+                        bg: {
+                            deep: '#0C0D0E',
+                            card: '#16181A',
+                        },
+                        text: {
+                            main: '#F8F5F2',
+                            muted: '#9CA3AF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0C0D0E; color: #F8F5F2; overflow-x: hidden; }
+        .bento-card { background-color: #16181A; border: 1px solid rgba(197, 160, 89, 0.2); border-radius: 24px; padding: 24px; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .bento-card:hover { border-color: rgba(197, 160, 89, 0.5); transform: translateY(-4px); }
+        .recipe-indicator { width: 8px; height: 8px; background: #C5A059; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-500 py-6 bg-bg-deep/80 backdrop-blur-md border-bottom border-gold/10">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 group">
+                <div class="p-2 rounded-xl bg-gold group-hover:rotate-12 transition-transform shadow-lg">
+                    <i data-lucide="hotel" class="text-bg-deep w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-serif font-black tracking-tighter text-text-main">
+                    GRAND <span class="text-gold">PALACE</span>
+                </span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-10">
+                <a href="suites.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Suites</a>
+                <a href="dining.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Dining</a>
+                <a href="masterclass.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-gold">Masterclass</a>
+                <a href="reviews.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Reviews</a>
+                <a href="profile.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Profile</a>
+                <a href="contact.html" class="text-[10px] uppercase tracking-[0.3em] font-black text-text-muted hover:text-gold transition-colors">Contact</a>
+                <button id="search-toggle" class="text-text-muted hover:text-gold transition-colors">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <a href="booking.html" class="px-8 py-3 bg-gold text-bg-deep text-[10px] uppercase tracking-[0.2em] font-black rounded-full hover:bg-white transition-all transform hover:scale-105">
+                    Reserved Stay
+                </a>
+            </div>
+            <button id="mobile-menu-toggle" class="lg:hidden text-text-main"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-bg-deep z-[60] flex flex-col items-center justify-center space-y-8 translate-x-full transition-transform duration-500">
+        <button id="mobile-menu-close" class="absolute top-8 right-8 text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="suites.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Luxury Suites</a>
+        <a href="dining.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Gourmet Dining</a>
+        <a href="masterclass.html" class="text-3xl font-serif font-black text-gold">Masterclasses</a>
+        <a href="contact.html" class="text-3xl font-serif font-black text-text-main hover:text-gold">Contact</a>
+        <button id="search-mobile-toggle" class="text-gold flex items-center space-x-3 text-2xl font-serif font-black">
+            <i data-lucide="search" class="w-8 h-8"></i>
+            <span>Search Portal</span>
+        </button>
+        <a href="booking.html" class="px-12 py-5 bg-gold text-bg-deep text-lg uppercase font-black rounded-full">Book Experience</a>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 bg-bg-deep/95 backdrop-blur-2xl z-[100] flex flex-col opacity-0 pointer-events-none transition-all duration-500">
+        <button id="search-close" class="absolute top-8 right-8 text-gold hover:rotate-90 transition-transform">
+            <i data-lucide="x" class="w-12 h-12"></i>
+        </button>
+        
+        <div class="container mx-auto px-6 mt-40 max-w-4xl">
+            <div class="relative group">
+                <input type="text" id="search-input" placeholder="What are you seeking? (Suites, Dining, Heritage...)" 
+                       class="w-full bg-transparent border-b-2 border-gold/20 py-8 text-4xl md:text-6xl font-serif font-black text-white outline-none focus:border-gold transition-all placeholder:text-text-muted/30">
+                <div class="absolute right-0 bottom-4 text-gold/30 group-focus-within:text-gold transition-colors">
+                    <i data-lucide="search" class="w-10 h-10"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20">
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Popular Sanctuaries</h4>
+                    <ul class="space-y-4">
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Presidential Coastal Wing</span>
+                        </a></li>
+                        <li><a href="suites.html" class="flex items-center space-x-4 text-text-muted hover:text-white transition-all group">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                            <span class="text-lg font-serif">Heritage Royal Studio</span>
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] font-black text-gold mb-8">Quick Navigation</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="dining.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Menu</a>
+                        <a href="masterclass.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Chef's Class</a>
+                        <a href="contact.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Concierge</a>
+                        <a href="profile.html" class="px-6 py-2 bg-bg-card border border-gold/10 rounded-full text-[10px] font-black uppercase tracking-widest text-text-muted hover:text-gold hover:border-gold transition-all">Member Portal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="pt-40 pb-32 px-6 bg-bg-deep border-y border-gold/10 overflow-hidden">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-20 space-y-4 lg:space-y-0 reveal active">
+                <div class="lg:w-2/3">
+                    <span class="text-gold uppercase tracking-[0.4em] font-black text-[10px] mb-4 block">Kitchen Heritage</span>
+                    <h2 class="text-5xl font-serif font-black mb-6 text-text-main">The Culinary Masterclass</h2>
+                    <p class="text-text-muted font-light max-w-2xl text-lg leading-relaxed border-l-2 border-gold/20 pl-8">
+                        Bring the magic of the Grand Palace into your home with meticulously curated guides from our legacy chefs.
+                    </p>
+                </div>
+                <div class="flex space-x-3 bg-bg-card p-3 rounded-2xl border border-gold/20">
+                    <button onclick="prevRecipe()" class="p-4 bg-bg-deep rounded-xl text-gold hover:text-white transition-all shadow-inner disabled:opacity-30" id="recipe-prev"><i data-lucide="chevron-left"></i></button>
+                    <button onclick="nextRecipe()" class="p-4 bg-bg-deep rounded-xl text-gold hover:text-white transition-all shadow-inner disabled:opacity-30" id="recipe-next"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div id="recipe-viewport" class="relative overflow-visible">
+                <div id="recipe-slider" class="flex transition-transform duration-1000 ease-in-out gap-12"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-bg-deep pt-32 pb-12 px-6 border-t border-gold/10">
+        <div class="container mx-auto text-center">
+            <p class="text-[9px] uppercase tracking-[0.4em] font-black text-text-muted">© 2026 THE GRAND PALACE GROUP • DIGITAL PORTAL SECURED</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const RECIPES = [
+            { name: "The Palace Risotto", time: "45 MIN", difficulty: "ADVANCED", image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&q=80&w=800", steps: ["Toast rice in dry pan", "Stir-in hot legacy broth", "Finish with truffle butter"], essentials: ["Aged Rice", "Black Truffle", "Bone Broth"] },
+            { name: "Signature Sea Bass", time: "30 MIN", difficulty: "MODERATE", image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800", steps: ["Sear skin side down", "Baste with lemon thyme", "Rest for 4 minutes"], essentials: ["Chilean Bass", "Lemon Thyme", "Smoked Salt"] },
+            { name: "Wagyu Perfection", time: "20 MIN", difficulty: "EXPERT", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800", steps: ["Bring meat to ambient", "Heavy sear both sides", "Serve with gold flakes"], essentials: ["A5 Wagyu", "Binchotan Charcoal", "Truffle Salt"] },
+            { name: "Imperial Caviar Blinis", time: "25 MIN", difficulty: "MODERATE", image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&q=80&w=800", steps: ["Whisk batter until airy", "Pan-fry small rounds", "Top with crème fraîche and caviar"], essentials: ["Beluga Caviar", "Buckwheat Flour", "Crème Fraîche"] },
+            { name: "Saffron Infused Lobster", time: "50 MIN", difficulty: "EXPERT", image: "https://images.unsplash.com/photo-1559144490-8328294facd8?auto=format&fit=crop&q=80&w=800", steps: ["Poach lobster in butter", "Infuse saffron reduction", "Emulsify with legacy oil"], essentials: ["Blue Lobster", "Iranian Saffron", "Artisanal Butter"] },
+            { name: "Grand Palace Soufflé", time: "40 MIN", difficulty: "ADVANCED", image: "https://images.unsplash.com/photo-1470333738027-50dc8629f635?auto=format&fit=crop&q=80&w=800", steps: ["Prepare copper ramekin", "Fold egg whites gently", "Bake until golden height"], essentials: ["70% Cacao", "Organic Eggs", "Golden Sugar"] }
+        ];
+        let recipeIndex = 0;
+        function renderRecipes() {
+            const container = document.getElementById('recipe-slider');
+            container.innerHTML = RECIPES.map((r, i) => `
+                <div class="min-w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative p-2 bg-gold/10 rounded-3xl">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl relative">
+                            <img src="${r.image}" class="w-full h-full object-cover grayscale-[0.3]" alt="${r.name}">
+                        </div>
+                    </div>
+                    <div class="bento-card p-12 bg-gradient-to-br from-bg-card to-bg-deep border-gold/20">
+                        <div class="flex items-center space-x-6 mb-8">
+                            <div class="flex items-center space-x-2 text-gold"><i data-lucide="clock" class="w-4 h-4"></i><span class="text-[10px] uppercase tracking-widest font-black">${r.time}</span></div>
+                            <div class="flex items-center space-x-2 text-gold"><i data-lucide="flame" class="w-4 h-4"></i><span class="text-[10px] uppercase tracking-widest font-black">${r.difficulty}</span></div>
+                        </div>
+                        <h3 class="text-5xl font-serif font-black mb-10 text-text-main leading-tight">${r.name}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div>
+                                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] mb-6 text-gold border-b border-gold/10 pb-2">Essentials</h4>
+                                <ul class="space-y-3">
+                                    ${r.essentials.map(e => `<li class="flex justify-between items-center text-[11px] text-text-muted font-light"><span>${e}</span><i class="recipe-indicator"></i></li>`).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] mb-6 text-gold border-b border-gold/10 pb-2">Preparation</h4>
+                                <ul class="space-y-6">
+                                    ${r.steps.map((s, idx) => `<li class="flex space-x-4"><span class="font-serif text-2xl text-gold/30 font-black">0${idx+1}</span><p class="text-[11px] text-text-muted leading-relaxed font-light mt-1">${s}</p></li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            updateRecipeSlider();
+        }
+        function nextRecipe() {
+            if(recipeIndex < RECIPES.length - 1) recipeIndex++;
+            updateRecipeSlider();
+        }
+        function prevRecipe() {
+            if(recipeIndex > 0) recipeIndex--;
+            updateRecipeSlider();
+        }
+        function updateRecipeSlider() {
+            const slider = document.getElementById('recipe-slider');
+            slider.style.transform = `translateX(-${recipeIndex * 100}%)`;
+            slider.style.gap = `0px`; 
+            document.getElementById('recipe-next').disabled = recipeIndex === RECIPES.length - 1;
+            document.getElementById('recipe-prev').disabled = recipeIndex === 0;
+        }
+        renderRecipes();
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-toggle').onclick = () => mobileMenu.classList.remove('translate-x-full');
+        document.getElementById('mobile-menu-close').onclick = () => mobileMenu.classList.add('translate-x-full');
+
+        // Search Logic
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchToggle = document.getElementById('search-toggle');
+        const searchMobileToggle = document.getElementById('search-mobile-toggle');
+        const searchClose = document.getElementById('search-close');
+        const searchInput = document.getElementById('search-input');
+
+        const openSearch = () => {
+            searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => searchInput.focus(), 500);
+            mobileMenu.classList.add('translate-x-full');
+        };
+        const closeSearch = () => searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+
+        if (searchToggle) searchToggle.onclick = openSearch;
+        if (searchMobileToggle) searchMobileToggle.onclick = openSearch;
+        if (searchClose) searchClose.onclick = closeSearch;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSearch();
+        });
+    </script>
+</body>
+</html>
